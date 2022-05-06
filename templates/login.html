@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+    <title>Log In</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
+
+    <style>
+
+        body, .main_container{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+
+        }
+
+    </style>
+    <script>
+        function login() {
+            $.ajax({
+                type: "POST",
+                url: "/login",
+                data: {id_give: $('#userid').val(), pw_give: $('#userpw').val()},
+                success: function (response) {
+                    if (response['result'] == 'success') {
+                        $.cookie('mytoken', response['token']);
+
+                        alert('로그인 완료!')
+                        window.location.href = '/'
+                    } else {
+                        alert(response['msg'])
+                    }
+                }
+            })
+        }
+
+        function signup() {
+            $.ajax({
+                type: "POST",
+                url: "/signup",
+                data: {email_give: $('#input-email').val(), pw_give: $('#input-pw').val()},
+                success: function (response) {
+                    if (response['result'] == 'success') {
+                        $.cookie('mytoken', response['token']);
+
+                        alert('로그인 완료!')
+                        window.location.href = '/'
+                    } else {
+                        alert(response['msg'])
+                    }
+                }
+            })
+
+        }
+    </script>
+
+</head>
+<body style="height: 100vh">
+<div class="main_container">
+
+    <div>
+        <input id="input-email" type="text" placeholder="e-mail">
+    </div>
+    <div>
+                <input id="input-pw" type="text" placeholder="비밀번호">
+    </div>
+    <button onclick="login()">
+        로그인
+    </button>
+    <button onclick="signup()">
+        회원가입
+    </button>
+
+
+</div>
+
+
+
+
+</body>
+</html>
